@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <!-- Font: Do Hyeon -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <!-- styles.css -->
+    <link ref="stylesheet" href="css/styles.css">
+
+    <style>
+        /* PC 화면 */
+        body { font-family: 'Do Hyeon', sans-serif; }
+        h1 {
+            margin: 50px;
+            margin-bottom: 70px;
+            font-size: 50px;
+            font-style: italic;
+        }
+        #number_ball {
+            margin-bottom: 20px;
+        }
+
+        .circle {
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            text-align: center;
+            font-size: x-large;
+            border-radius: 50%;
+            background-color: #FBC400;
+            margin: 20px;
+        }
+
+        /* Moblie 화면 */
+        @media (max-width: 992px) { h1 { font-size: xx-large; } }
+    </style>
+
+    <title>Lotto World</title>
+</head>
+<body>
+
+    <!-- Title -->
+    <header id="title">
+        <h1 class="text-center">Lotto World</h1>
+    </header>
+
+    <!-- Number Ball -->
+    <div id="number_ball">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="circle ball">
+                    1
+                </div>
+                <div class="circle ball">
+                    2
+                </div>
+                <div class="circle ball">
+                    3
+                </div>
+                <div class="circle ball">
+                    4
+                </div>
+                <div class="circle ball">
+                    5
+                </div>
+                <div class="circle ball">
+                    6
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Button -->
+    <div id="make_lotto_number">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="text-center">
+                    <button type="button" id="make_lotto_btn" class="btn btn-success">로또 번호 생성</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- scripts.js -->
+    <script type="text/javascript" src="js/scripts.js"></script>
+    <script type="text/javascript">
+        function lotto() {
+            var lottoNumList = [];
+
+            for(var i=0; i<6; i++) {
+                var num = Math.floor(Math.random() * 45) + 1;
+
+                if(!alreadyInLotto(num)) lottoNumList.push(num);
+                else i--;
+            }
+
+            function alreadyInLotto(num) {
+                return lottoNumList.find((x) => (x === num));
+            }
+
+            return lottoNumList;
+        }
+
+        $(document).ready(function() {
+            $("#make_lotto_btn").button().on("click", function(event) {
+                var lottoNumList = lotto();
+                var ballList = $(".ball");
+
+                for(var i=0; i<6; i++) {
+                    var num = lottoNumList[i];
+                    $(ballList[i]).text(num);
+                    if(num <= 10) $(ballList[i]).css("background-color", "#FBC400");
+                    else if(11 <= num && num <= 20) $(ballList[i]).css("background-color", "#69C8F2");
+                    else if(21 <= num && num <= 30) $(ballList[i]).css("background-color", "#FF7272");
+                    else if(31 <= num && num <= 40) $(ballList[i]).css("background-color", "#AAAAAA");
+                    else if(41 <= num) $(ballList[i]).css("background-color", "#B0D840");
+                }
+            });
+        });
+    </script>
+</body>
+</html>
