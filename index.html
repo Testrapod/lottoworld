@@ -91,6 +91,9 @@
                 <div class="text-center">
                     <button type="button" id="make_lotto_btn" class="btn btn-success">로또 번호 생성</button>
                 </div>
+                <div class="text-center">
+                    <button type="button" id="make_5_lotto_btn" class="btn btn-success">로또 번호 5개 생성</button>
+                </div>
             </div>
         </div>
     </div>
@@ -104,10 +107,6 @@
     <!-- scripts.js -->
     <script type="text/javascript" src="js/scripts.js"></script>
     <script type="text/javascript">
-        // Audio
-        var audio_click = new Audio("audio/click.mp3");
-        audio_click.volume = 0.5;
-
         // Lotto Function
         function lotto() {
             var lottoNumList = [];
@@ -125,8 +124,6 @@
         // Document Ready
         $(document).ready(function() {
             $("#make_lotto_btn").button().on("click", function(event) {
-                audio_click.play();
-
                 var lottoNumList = lotto();
                 var ballList = $(".ball");
 
