@@ -1,17 +1,40 @@
 /* index.html document ready */
-$(document).ready(function() {
-    $("#make_lotto_btn").button().on("click", function(event) {
+$(document).ready(function () {
+    var state = 1; // 화면에 보여질 로또번호 세트 (번호 6개가 한 세트)
+
+    $("#make_lotto_btn").button().on("click", function (event) {
+        if(state != 1) {
+            stateFlip(state);
+            state = 1;
+        }
+
         var lottoNumList = lotto();
         var ballList = $(".ball");
 
-        for(var i=0; i<6; i++) {
+        for (var i = 0; i < 6; i++) {
             var num = lottoNumList[i];
             $(ballList[i]).text(num);
-            if(num <= 10) $(ballList[i]).css("background-color", "#FBC400");
-            else if(11 <= num && num <= 20) $(ballList[i]).css("background-color", "#69C8F2");
-            else if(21 <= num && num <= 30) $(ballList[i]).css("background-color", "#FF7272");
-            else if(31 <= num && num <= 40) $(ballList[i]).css("background-color", "#AAAAAA");
-            else if(41 <= num) $(ballList[i]).css("background-color", "#B0D840");
+            colorSetting(num, ballList[i]);
+        }
+    });
+
+    $("#make_5_lotto_btn").button().on("click", function (event) {
+        if(state != 5) {
+            stateFlip(state);
+            state = 5;
+        }
+
+        var idx = 0;
+        var ballList = $(".ball");
+        for (var j = 0; j < 5; j++) {
+            var lottoNumList = lotto();
+
+            for (var i = 0; i < 6; i++) {
+                var num = lottoNumList[i];
+                $(ballList[idx]).text(num);
+                colorSetting(num, ballList[idx]);
+                idx++;
+            }
         }
     });
 });
