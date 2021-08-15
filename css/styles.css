@@ -1,1 +1,49 @@
-#title { color: red; }
+@charset "UTF-8";
+
+
+
+/* font 적용 */
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+body { font-family: 'Do Hyeon', sans-serif; }
+
+
+
+/* pc 화면 */
+h1 {
+    margin: 50px;
+    margin-bottom: 70px;
+    font-size: 50px;
+    font-style: italic;
+}
+#number_ball {
+    margin-bottom: 20px;
+}
+
+.circle {
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    font-size: x-large;
+    border-radius: 50%;
+    background-color: #FBC400;
+    margin: 20px;
+}
+
+.btn:focus { box-shadow: none; }
+
+
+
+/* moblie 화면 */
+@media (max-width: 992px) {
+    h1 {
+        font-size: 38px;
+        margin-bottom: 50px;
+    } 
+}
+@media (max-width: 419px) {
+    h1 {
+        font-size: xx-large;
+        margin-bottom: 20px;
+    } 
+}
