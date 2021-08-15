@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="favicon_io/site.webmanifest">
+
+    <!-- bootstrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <!-- styles css -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <title>Lotto World</title>
+</head>
+<body>
+
+    <!-- title -->
+    <header id="title">
+        <h1 class="text-center">Lotto World</h1>
+    </header>
+
+    <!-- navi -->
+    <div id="navi">
+        <div class="container">
+            <ul class="nav nav-pills justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">홈</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">로또 번호 생성기</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">로또 통계</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- select count -->
+    <div id="select_count">
+        <div class="container col-md-4">
+            <select id="select_lotto_count" class="form-select" aria-label="Default select example">
+                <option selected value="0">생성할 갯수를 선택해 주세요</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- button -->
+    <div id="make_lotto_number">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="text-center">
+                    <button type="button" id="make_lotto_btn" class="btn btn-success">로또 번호 생성</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- number ball -->
+    <div id="number_ball">
+        <div class="container">
+            <div class="row justify-content-center view-balls">
+                <div class="circle-mini ball-text">A</div>
+                <div class="circle-mini ball">1</div>
+                <div class="circle-mini ball">2</div>
+                <div class="circle-mini ball">3</div>
+                <div class="circle-mini ball">4</div>
+                <div class="circle-mini ball">5</div>
+                <div class="circle-mini ball">6</div>
+            </div>
+            <div class="row justify-content-center view-balls">
+                <div class="circle-mini ball-text">B</div>
+                <div class="circle-mini ball">1</div>
+                <div class="circle-mini ball">2</div>
+                <div class="circle-mini ball">3</div>
+                <div class="circle-mini ball">4</div>
+                <div class="circle-mini ball">5</div>
+                <div class="circle-mini ball">6</div>
+            </div>
+            <div class="row justify-content-center view-balls">
+                <div class="circle-mini ball-text">C</div>
+                <div class="circle-mini ball">1</div>
+                <div class="circle-mini ball">2</div>
+                <div class="circle-mini ball">3</div>
+                <div class="circle-mini ball">4</div>
+                <div class="circle-mini ball">5</div>
+                <div class="circle-mini ball">6</div>
+            </div>
+            <div class="row justify-content-center view-balls">
+                <div class="circle-mini ball-text">D</div>
+                <div class="circle-mini ball">1</div>
+                <div class="circle-mini ball">2</div>
+                <div class="circle-mini ball">3</div>
+                <div class="circle-mini ball">4</div>
+                <div class="circle-mini ball">5</div>
+                <div class="circle-mini ball">6</div>
+            </div>
+            <div class="row justify-content-center view-balls">
+                <div class="circle-mini ball-text">E</div>
+                <div class="circle-mini ball">1</div>
+                <div class="circle-mini ball">2</div>
+                <div class="circle-mini ball">3</div>
+                <div class="circle-mini ball">4</div>
+                <div class="circle-mini ball">5</div>
+                <div class="circle-mini ball">6</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer -->
+    <footer></footer>
+
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- bootstrap js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <!-- chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- scripts js -->
+    <script type="text/javascript" src="js/function.js"></script>
+    <script type="text/javascript" src="js/make_lotto.ready.js"></script>
+</body>
+</html>
