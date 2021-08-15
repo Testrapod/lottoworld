@@ -1,4 +1,4 @@
-// Lotto Function
+/* algorithm function */
 function lotto() {
     var lottoNumList = [];
 
