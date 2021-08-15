@@ -4,7 +4,7 @@ $(document).ready(function () {
 
     $("#make_lotto_btn").button().on("click", function (event) {
         var count = $("#select_lotto_count option:selected").val();
-        if(count == 0) {
+        if (count == 0) {
             captureable = false;
             return;
         }
@@ -32,7 +32,7 @@ $(document).ready(function () {
     });
 
     $("#make_img_btn").button().on("click", function (event) {
-        if(captureable == false) { return; }
+        if (captureable == false) { return; }
 
         html2canvas(document.querySelector("#number_ball")).then(canvas => {
             saveImg(canvas.toDataURL('image/png'), "lotto.png");
