@@ -26,7 +26,15 @@ h1 {
     margin: 20px;
 }
 
+.other-balls { display: none; }
+.other-balls-text {
+    display: none;
+    font-size: larger;
+} 
+
 .btn:focus { box-shadow: none; }
+
+footer { margin: 50px; }
 
 /* moblie 화면 */
 @media (max-width: 992px) {
