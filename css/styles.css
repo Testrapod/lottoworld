@@ -1,12 +1,8 @@
 @charset "UTF-8";
 
-
-
 /* font 적용 */
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
 body { font-family: 'Do Hyeon', sans-serif; }
-
-
 
 /* pc 화면 */
 h1 {
@@ -31,8 +27,6 @@ h1 {
 }
 
 .btn:focus { box-shadow: none; }
-
-
 
 /* moblie 화면 */
 @media (max-width: 992px) {
