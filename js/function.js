@@ -18,3 +18,16 @@ function colorSetting(num, ball) {
     else if(31 <= num && num <= 40) $(ball).css("background-color", "#AAAAAA");
     else if(41 <= num) $(ball).css("background-color", "#B0D840");
 }
+
+function saveImg(uri, filename) {
+    var link = document.createElement('a');
+    if (typeof link.download === 'string') {
+        link.href = uri;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } else {
+        window.open(uri);
+    }
+}
