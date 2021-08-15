@@ -53,6 +53,7 @@ h1 {
 .other-balls-text {
     display: none;
     font-size: larger;
+    background-color: white;
 } 
 
 footer { margin: 50px; }
