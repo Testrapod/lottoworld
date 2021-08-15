@@ -16,9 +16,13 @@ function stateFlip(state) {
         $(".other-balls").css("display", "flex");
         $(".other-balls-text").css("display", "block");
 
-        $(".circle").css("width", "50px");
-        $(".circle").css("height", "50px");
-        $(".circle").css("line-height", "50px");
+        $(".circle").css("width", "40px");
+        $(".circle").css("height", "40px");
+        $(".circle").css("line-height", "40px");
+        $(".circle").css("font-size", "large");
+        $(".circle").css("margin", "5px");
+
+        $("#navi").css("margin-bottom", "30px");
     } else { // 5 -> 1
         $(".other-balls").css("display", "none");
         $(".other-balls-text").css("display", "none");
@@ -26,6 +30,10 @@ function stateFlip(state) {
         $(".circle").css("width", "100px");
         $(".circle").css("height", "100px");
         $(".circle").css("line-height", "100px");
+        $(".circle").css("font-size", "x-large");
+        $(".circle").css("margin", "20px");
+
+        $("#navi").css("margin-bottom", "50px");
     }
 }
 

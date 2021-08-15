@@ -4,15 +4,38 @@
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
 body { font-family: 'Do Hyeon', sans-serif; }
 
+/* bootstrap 코드 */
+.btn:focus { box-shadow: none; }
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #355C7D;
+}
+.nav-link {
+    display: block;
+    padding: .5rem 1rem;
+    color: #6C5B7B;
+    text-decoration: none;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+}
+.nav-link:focus, .nav-link:hover {
+    color: #C06C84;
+}
+
 /* pc 화면 */
 h1 {
     margin: 50px;
-    margin-bottom: 70px;
+    margin-bottom: 30px;
     font-size: 50px;
     font-style: italic;
 }
+#navi {
+    margin-bottom: 50px;
+}
 #number_ball {
     margin-bottom: 20px;
+}
+#make_lotto_number {
+    margin-top: 30px;
 }
 
 .circle {
@@ -32,20 +55,22 @@ h1 {
     font-size: larger;
 } 
 
-.btn:focus { box-shadow: none; }
-
 footer { margin: 50px; }
 
 /* moblie 화면 */
 @media (max-width: 992px) {
     h1 {
         font-size: 38px;
-        margin-bottom: 50px;
-    } 
+    }
+    #navi {
+        margin-bottom: 40px;
+    }
 }
 @media (max-width: 419px) {
     h1 {
         font-size: xx-large;
-        margin-bottom: 20px;
-    } 
+    }
+    #navi {
+        margin-bottom: 30px;
+    }
 }
