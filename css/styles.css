@@ -46,6 +46,10 @@ h1 {
     height: 38px;
     line-height: 38px;
 }
+#number_frequency_title {
+    font-size: x-large;
+    margin: 10px;
+}
 
 .circle {
     width: 100px;
@@ -80,6 +84,11 @@ h1 {
 
 .ball-text { background-color: white; }
 .view-balls { display: none; }
+
+.bar-chart {
+    width: 600px;
+    height: 500px;
+}
 
 .divide { margin: 20px; }
 footer { margin: 50px; }
