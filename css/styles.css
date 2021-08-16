@@ -34,6 +34,10 @@ h1 {
     margin-top: 20px;
     margin-bottom: 30px;
 }
+#select_lotto_div {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
 
 .circle {
     width: 100px;
@@ -65,6 +69,9 @@ footer { margin: 50px; }
 @media (max-width: 992px) {
     h1 { font-size: 38px; }
     #navi { margin-bottom: 40px; }
+}
+@media (max-width: 767px) {
+    #search_lotto_number { margin-top: 20px; }
 }
 @media (max-width: 419px) {
     h1 { font-size: xx-large; }
