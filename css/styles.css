@@ -86,8 +86,7 @@ h1 {
 .view-balls { display: none; }
 
 .bar-chart {
-    width: 600px;
-    height: 500px;
+    width: 1000px;
 }
 
 .divide { margin: 20px; }
