@@ -26,17 +26,24 @@ $(document).ready(function () {
         $.each(lottoDataList, function (i, item) {
             var option = $("<option value="+i+">"+lottoDataList[i].drwNo+"</option>");
             $("#select_lotto_number").append(option);
-            // console.log(item.drwNo);
         });
 
+        // select에 번호 추가
         var number = $("#select_lotto_number option:selected").val();
         var lottoData = lottoDataList[number];
         ballListChangeWithJson(lottoData);
+
+        // 날짜 세팅
+        $("#select_lotto_date").text(lottoData.drwNoDate);
     });
 
     $("#search_lotto_btn").button().on("click", function (event) {
+        // select에 번호 추가
         var number = $("#select_lotto_number option:selected").val();
         var lottoData = lottoDataList[number];
         ballListChangeWithJson(lottoData);
+
+        // 날짜 세팅
+        $("#select_lotto_date").text(lottoData.drwNoDate);
     });
 });
