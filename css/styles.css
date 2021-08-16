@@ -34,9 +34,17 @@ h1 {
     margin-top: 20px;
     margin-bottom: 30px;
 }
-#select_lotto_div {
+#select_lotto {
     margin-top: 20px;
     margin-bottom: 30px;
+}
+#select_lotto_title {
+    font-size: x-large;
+    margin: 10px;
+}
+#select_lotto_date {
+    height: 38px;
+    line-height: 38px;
 }
 
 .circle {
@@ -48,6 +56,16 @@ h1 {
     border-radius: 50%;
     background-color: #FBC400;
     margin: 20px;
+}
+.circle-medium {
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    font-size: x-large;
+    border-radius: 50%;
+    background-color: #FBC400;
+    margin: 15px;
 }
 .circle-mini {
     width: 40px;
@@ -63,7 +81,9 @@ h1 {
 .ball-text { background-color: white; }
 .view-balls { display: none; }
 
+.divide { margin: 20px; }
 footer { margin: 50px; }
+
 
 /* moblie 화면 */
 @media (max-width: 992px) {
@@ -71,7 +91,7 @@ footer { margin: 50px; }
     #navi { margin-bottom: 40px; }
 }
 @media (max-width: 767px) {
-    #search_lotto_number { margin-top: 20px; }
+    #search_lotto_btn { margin-top: 10px; }
 }
 @media (max-width: 419px) {
     h1 { font-size: xx-large; }

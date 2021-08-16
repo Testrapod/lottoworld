@@ -43,14 +43,21 @@
     </div>
 
     <!-- select lotto -->
-    <div id="select_lotto_div">
+    <div id="select_lotto">
         <div class="container">
-            <div class="row justify-content-center">
+            <div id="select_lotto_title" class="row justify-content-center">
+                <div class="text-center">
+                    지난 회차 로또번호 확인
+                </div>
+            </div>
+            <div id="select_lotto_content" class="row justify-content-center">
+                <div id="select_lotto_date" class="col-md-2 text-center">
+                </div>
                 <div class="col-md-2">
                     <select id="select_lotto_number" class="form-select" aria-label="Default select example">
                     </select>
                 </div>
-                <div id="search_lotto_number" class="col-md-2 text-center">
+                <div class="col-md-2 text-center">
                     <button type="button" id="search_lotto_btn" class="btn btn-success">확인하기</button>
                 </div>
             </div>
@@ -61,15 +68,17 @@
     <div id="number_ball">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="circle ball">1</div>
-                <div class="circle ball">2</div>
-                <div class="circle ball">3</div>
-                <div class="circle ball">4</div>
-                <div class="circle ball">5</div>
-                <div class="circle ball">6</div>
+                <div class="circle-medium ball">1</div>
+                <div class="circle-medium ball">2</div>
+                <div class="circle-medium ball">3</div>
+                <div class="circle-medium ball">4</div>
+                <div class="circle-medium ball">5</div>
+                <div class="circle-medium ball">6</div>
             </div>
         </div>
     </div>
+
+    <br>
 
     <!-- footer -->
     <footer></footer>
