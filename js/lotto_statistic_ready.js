@@ -10,12 +10,8 @@ var colorList21To30 = ["#FF7272", "#FF7272", "#FF7272", "#FF7272", "#FF7272", "#
 var colorList31To40 = ["#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA"];
 var colorList41To45 = ["#B0D840", "#B0D840", "#B0D840", "#B0D840", "#B0D840"];
 var colorList = colorList1To10.concat(colorList11To20, colorList21To30, colorList31To40, colorList41To45);
-// var numberFreqData1To10 = [12, 19, 3, 5, 2, 12, 19, 3, 5, 2];
-// var numberFreqData11To20 = [12, 19, 3, 5, 2, 12, 19, 3, 5, 2];
-// var numberFreqData21To30 = [12, 19, 3, 5, 2, 12, 19, 3, 5, 2];
-// var numberFreqData31To40 = [12, 19, 3, 5, 2, 12, 19, 3, 5, 2];
-// var numberFreqData41To45 = [12, 19, 3, 5, 2];
-// var numberFreqData = numberFreqData1To10.concat(numberFreqData11To20, numberFreqData21To30, numberFreqData31To40, numberFreqData41To45);
+
+var lottoFreqMax = 180, lottoFreqMin = 60;
 var lottoFreqList = [];
 
 function ballListChangeWithJson(lottoData) {
@@ -57,7 +53,7 @@ $(document).ready(function () {
     });
 
     $.getJSON("https://10eastsea.github.io/lottoworld/src/lotto_freq_list.json", function (data) {
-        $.each(data, function (i, item) { lottoFreqList.push(data.number); });
+        $.each(data, function (i, item) { lottoFreqList.push(item.number); });
 
         // 번호별 빈도수 차트 그리기
         var ctx = document.getElementById('number_frequency_chart');
@@ -65,18 +61,24 @@ $(document).ready(function () {
             type: 'bar',
             data: {
                 labels: numberList,
-                datasets: [
-                    {
-                        label: '# of Votes',
-                        data: lottoFreqList,
-                        backgroundColor: colorList,
-                    }
-                ]
+                datasets: [{
+                    data: lottoFreqList,
+                    backgroundColor: colorList,
+                }]
             },
             options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
                 scales: {
                     y: {
-                        beginAtZero: true
+                        max: lottoFreqMax,
+                        min: lottoFreqMin,
+                        ticks: {
+                            stepSize: 10
+                        }
                     }
                 }
             }
