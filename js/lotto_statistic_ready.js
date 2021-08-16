@@ -1,4 +1,23 @@
 /* lotto_statistic.html document ready */
+var numberList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+                  11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+                  21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+                  31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+                  41, 42, 43, 44, 45];
+var colorList1To10 = ["#FBC400", "#FBC400", "#FBC400", "#FBC400", "#FBC400", "#FBC400", "#FBC400", "#FBC400", "#FBC400", "#FBC400"];
+var colorList11To20 = ["#69C8F2", "#69C8F2", "#69C8F2", "#69C8F2", "#69C8F2", "#69C8F2", "#69C8F2", "#69C8F2", "#69C8F2", "#69C8F2"];
+var colorList21To30 = ["#FF7272", "#FF7272", "#FF7272", "#FF7272", "#FF7272", "#FF7272", "#FF7272", "#FF7272", "#FF7272", "#FF7272"];
+var colorList31To40 = ["#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA"];
+var colorList41To45 = ["#B0D840", "#B0D840", "#B0D840", "#B0D840", "#B0D840"];
+var colorList = colorList1To10.concat(colorList11To20, colorList21To30, colorList31To40, colorList41To45);
+// var numberFreqData1To10 = [12, 19, 3, 5, 2, 12, 19, 3, 5, 2];
+// var numberFreqData11To20 = [12, 19, 3, 5, 2, 12, 19, 3, 5, 2];
+// var numberFreqData21To30 = [12, 19, 3, 5, 2, 12, 19, 3, 5, 2];
+// var numberFreqData31To40 = [12, 19, 3, 5, 2, 12, 19, 3, 5, 2];
+// var numberFreqData41To45 = [12, 19, 3, 5, 2];
+// var numberFreqData = numberFreqData1To10.concat(numberFreqData11To20, numberFreqData21To30, numberFreqData31To40, numberFreqData41To45);
+var lottoFreqList = [];
+
 function ballListChangeWithJson(lottoData) {
     var ballList = $(".ball");
 
@@ -21,10 +40,10 @@ $(document).ready(function () {
 
     $.getJSON("https://10eastsea.github.io/lottoworld/src/lotto_data_list.json", function (data) {
         lottoDataList = data;
-        lottoDataList = lottoDataList.sort(function(a,b) { return b.drwNo - a.drwNo; });
+        lottoDataList = lottoDataList.sort(function (a, b) { return b.drwNo - a.drwNo; });
 
         $.each(lottoDataList, function (i, item) {
-            var option = $("<option value="+i+">"+lottoDataList[i].drwNo+"</option>");
+            var option = $("<option value=" + i + ">" + lottoDataList[i].drwNo + "</option>");
             $("#select_lotto_number").append(option);
         });
 
@@ -35,6 +54,33 @@ $(document).ready(function () {
 
         // 날짜 세팅
         $("#select_lotto_date").text(lottoData.drwNoDate);
+    });
+
+    $.getJSON("https://10eastsea.github.io/lottoworld/src/lotto_freq_list.json", function (data) {
+        $.each(data, function (i, item) { lottoFreqList.push(data.number); });
+
+        // 번호별 빈도수 차트 그리기
+        var ctx = document.getElementById('number_frequency_chart');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: numberList,
+                datasets: [
+                    {
+                        label: '# of Votes',
+                        data: lottoFreqList,
+                        backgroundColor: colorList,
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
     });
 
     $("#search_lotto_btn").button().on("click", function (event) {
