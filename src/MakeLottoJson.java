@@ -118,9 +118,12 @@ public class MakeLottoJson {
 
     public static void main(String[] args) throws Exception {
         if(args.length < 1) {
+            System.out.println();
             System.out.println("Please enter the [FLAG]");
-            System.out.println("    -all: 파일을 새로 만들어 모든 정보를 서버에서 크롤링 (파일이 이미 존재한다면 덮어 씀)");
-            System.out.println("    -update: 이미 존재하는 파일에 새로 업데이트된 내용만 서버에서 크롤링");
+            System.out.println();
+            System.out.println("    -all: Make a new file to crawl all information from server (overwrite if file already exists)");
+            System.out.println("    -update: Only newly updated content is crawled from the server to files that already exist");
+            System.out.println();
             return;
         }
 
