@@ -4,15 +4,11 @@ var numberList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
                   21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
                   31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
                   41, 42, 43, 44, 45];
-var colorList1To10 = ["#FBC400", "#FBC400", "#FBC400", "#FBC400", "#FBC400", "#FBC400", "#FBC400", "#FBC400", "#FBC400", "#FBC400"];
-var colorList11To20 = ["#69C8F2", "#69C8F2", "#69C8F2", "#69C8F2", "#69C8F2", "#69C8F2", "#69C8F2", "#69C8F2", "#69C8F2", "#69C8F2"];
-var colorList21To30 = ["#FF7272", "#FF7272", "#FF7272", "#FF7272", "#FF7272", "#FF7272", "#FF7272", "#FF7272", "#FF7272", "#FF7272"];
-var colorList31To40 = ["#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA"];
-var colorList41To45 = ["#B0D840", "#B0D840", "#B0D840", "#B0D840", "#B0D840"];
-var colorList = colorList1To10.concat(colorList11To20, colorList21To30, colorList31To40, colorList41To45);
-
-var lottoFreqMax = 180, lottoFreqMin = 60;
-var lottoFreqList = [];
+var colorList = ["#FBC400", "#FBC400", "#FBC400", "#FBC400", "#FBC400", "#FBC400", "#FBC400", "#FBC400", "#FBC400", "#FBC400",
+                 "#69C8F2", "#69C8F2", "#69C8F2", "#69C8F2", "#69C8F2", "#69C8F2", "#69C8F2", "#69C8F2", "#69C8F2", "#69C8F2",
+                 "#FF7272", "#FF7272", "#FF7272", "#FF7272", "#FF7272", "#FF7272", "#FF7272", "#FF7272", "#FF7272", "#FF7272",
+                 "#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA", "#AAAAAA",
+                 "#B0D840", "#B0D840", "#B0D840", "#B0D840", "#B0D840"];
 
 function ballListChangeWithJson(lottoData) {
     var ballList = $(".ball");
@@ -32,7 +28,9 @@ function ballListChangeWithJson(lottoData) {
 }
 
 $(document).ready(function () {
-    var lottoDataList;
+    var lottoDataList = [];
+    var lottoFreqList = [];
+    var lottoFreqMax = 180, lottoFreqMin = 60;
 
     $.getJSON("https://10eastsea.github.io/lottoworld/src/lotto_data_list.json", function (data) {
         lottoDataList = data;
@@ -54,6 +52,8 @@ $(document).ready(function () {
 
     $.getJSON("https://10eastsea.github.io/lottoworld/src/lotto_freq_list.json", function (data) {
         $.each(data, function (i, item) { lottoFreqList.push(item.number); });
+        lottoFreqMax = parseInt((Math.max.apply(null, lottoFreqList) + 20) / 10) * 10;
+        lottoFreqMin = parseInt((Math.min.apply(null, lottoFreqList) - 20) / 10) * 10;
 
         // 번호별 빈도수 차트 그리기
         var ctx = document.getElementById('number_frequency_chart');
