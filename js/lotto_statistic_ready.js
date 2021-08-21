@@ -27,6 +27,25 @@ function ballListChangeWithJson(lottoData) {
     colorSetting(lottoData.drwtNo6, ballList[5]);
 }
 
+function numListCompareWithJson(numList, lottoData) {
+    var count = 0;
+    var sameNumList = [];
+
+    cmpList = [lottoData.drwtNo1, lottoData.drwtNo2, lottoData.drwtNo3, lottoData.drwtNo4, lottoData.drwtNo5, lottoData.drwtNo6];
+    
+    for(var i=0; i<6; i++) {
+        for(var j=0; j<6; j++) {
+            if(numList[i] == cmpList[j]) {
+                sameNumList.push(numList[i]);
+                count++;
+                break;
+            }
+        }
+    }
+
+    return {count, cmpList, sameNumList};
+}
+
 $(document).ready(function () {
     var lottoDataList = [];
     var lottoFreqList = [];
@@ -88,6 +107,9 @@ $(document).ready(function () {
         });
     });
 
+    if(document.getElementById("number_analysis_table").rows.length == 1) $("#number_analysis_table").css("display", "none");
+    else $("#number_analysis_table").css("display", "table");
+
     $("#search_lotto_btn").button().on("click", function (event) {
         // select에 번호 추가
         var number = $("#select_lotto_number option:selected").val();
@@ -96,5 +118,61 @@ $(document).ready(function () {
 
         // 날짜 세팅
         $("#select_lotto_date").text(lottoData.drwNoDate);
+    });
+
+    $("#number_analysis_btn").button().on("click", function (event) {
+        // 번호 가져오기
+        var numList = [];
+        var formList = $(".form-control");
+
+        for(var i=0; i<6; i++) {
+            var num = parseInt($(formList[i]).val());
+            if(isNaN(num) || num < 1 || num > 45) {
+                alert("1부터 45사이의 숫자로만 입력해주세요.");
+                return;
+            }
+            numList.push(num);
+        }
+
+        // 중복 확인
+        var numSet = new Set(numList);
+        if(numList.length !== numSet.size) {
+            alert("중복된 숫자는 입력할 수 없습니다.");
+            return;
+        }
+        
+        // 실제 루틴
+        $("#number_analysis_table>tbody").empty();
+        $.each(lottoDataList, function (i, item) {
+            var {count, cmpList, sameNumList} = numListCompareWithJson(numList, item);
+            if(count >= 3) {
+                // var tagContent =
+                //     "<tr>" +
+                //         "<td scope=\"row\">" + item.drwNo + "회</td>" +
+                //         "<td>" +
+                //             "<div class=\"row justify-content-center\">" +
+                //                 "<div class=\"circle-x-mini ball\">" + cmpList[0] + "</div>" +
+                //                 "<div class=\"circle-x-mini ball\">" + cmpList[1] + "</div>" +
+                //                 "<div class=\"circle-x-mini ball\">" + cmpList[2] + "</div>" +
+                //                 "<div class=\"circle-x-mini ball\">" + cmpList[3] + "</div>" +
+                //                 "<div class=\"circle-x-mini ball\">" + cmpList[4] + "</div>" +
+                //                 "<div class=\"circle-x-mini ball\">" + cmpList[5] + "</div>" +
+                //             "</div>" +
+                //         "</td>" +
+                //         "<td>" + count + "</td>" +
+                //     "</tr>";
+                var tagContent =
+                    "<tr>" +
+                        "<td scope=\"row\">" + item.drwNo + "회</td>" +
+                        "<td>" + cmpList[0] + ", " + cmpList[1] + ", " + cmpList[2] + ", " + cmpList[3] + ", " + cmpList[4] + ", " + cmpList[5] + "</td>" +
+                        "<td>" + count + "</td>" +
+                    "</tr>";
+
+                $("#number_analysis_table>tbody").append(tagContent);
+            }
+        });
+
+        if(document.getElementById("number_analysis_table").rows.length == 1) $("#number_analysis_table").css("display", "none");
+        else $("#number_analysis_table").css("display", "table");
     });
 });
