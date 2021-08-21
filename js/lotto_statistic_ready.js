@@ -51,7 +51,10 @@ $(document).ready(function () {
     });
 
     $.getJSON("https://10eastsea.github.io/lottoworld/src/lotto_freq_list.json", function (data) {
-        $.each(data, function (i, item) { lottoFreqList.push(item.number); });
+        $.each(data, function (i, item) {
+            if(i == 0) return true;
+            lottoFreqList.push(item.number);
+        });
         lottoFreqMax = parseInt((Math.max.apply(null, lottoFreqList) + 20) / 10) * 10;
         lottoFreqMin = parseInt((Math.min.apply(null, lottoFreqList) - 20) / 10) * 10;
 

@@ -11,9 +11,13 @@ public class MakeLottoJson {
     **      java -cp .:json-simple-1.1.1.jar MakeLottoJson [FALG]
     **
     **          [FLAG]
-    **              -all: 파일을 새로 만들어 모든 정보를 서버에서 크롤링 (파일이 이미 존재한다면 덮어 씀)
-    **              -update: 이미 존재하는 파일에 새로 업데이트된 내용만 서버에서 크롤링
-    **              -freq-all: 파일을 새로 만들어 모든 정보를 서버에서 크롤링 후 번호별 빈도수 체크 (파일이 이미 존재한다면 덮어 씀)
+    **              -data: 파일을 새로 만들어 모든 정보를 서버에서 크롤링 (파일이 이미 존재한다면 덮어 씀)
+    **              -data-update: 이미 존재하는 파일에 새로 업데이트된 내용만 서버에서 크롤링
+    **              -freq: 파일을 새로 만들어 모든 정보를 서버에서 크롤링 후 번호별 빈도수 체크 (파일이 이미 존재한다면 덮어 씀)
+    **              -freq-update: 이미 존재하는 파일에 새로 업데이트된 내용만 서버에서 크롤링
+    **
+    **              -all: -data와 -freq를 순차적으로 실행
+    **              -update: -data-update와 -freq-update를 순차적으로 실행
     **
     */
 
@@ -70,12 +74,12 @@ public class MakeLottoJson {
         fw.close();
     }
 
-    public static void makeJsonFileForLottoFreq(int[] lottoFreqList) throws Exception {
+    public static void makeJsonFileForLottoFreq(int drwNo, int[] lottoFreqList) throws Exception {
         File file = new File(LOTTO_FREQ_LIST_PATH);
         file.createNewFile();
 
         BufferedWriter fw = new BufferedWriter(new FileWriter(file, false));
-        fw.write("[\n");
+        fw.write("[\n    {\"drwNoBy\":\"" + drwNo + "\"},\n");
         for(int i=1; i<45; i++) { fw.write("    {\"number\":\"" + lottoFreqList[i] + "\"},\n"); }
         fw.write("    {\"number\":\"" + lottoFreqList[45] + "\"}\n]");
 
@@ -132,12 +136,15 @@ public class MakeLottoJson {
     public static void allLottoFreqCrawling(String baseUrl) throws Exception {
         int[] lottoFreqList = new int[46];
 
-        for(int drwNo = 1; ; drwNo++) {
+        int drwNo = 1;
+        for( ; ; drwNo++) {
             String url = baseUrl + drwNo;
             JSONObject lottoData = urlRead(url);
 
-            if(lottoData.get("returnValue").equals("fail")) break;
-            else {
+            if(lottoData.get("returnValue").equals("fail")) {
+                drwNo--;
+                break;
+            } else {
                 lottoFreqList[Integer.parseInt(lottoData.get("drwtNo1").toString())]++;
                 lottoFreqList[Integer.parseInt(lottoData.get("drwtNo2").toString())]++;
                 lottoFreqList[Integer.parseInt(lottoData.get("drwtNo3").toString())]++;
@@ -147,7 +154,44 @@ public class MakeLottoJson {
             }
         }
 
-        makeJsonFileForLottoFreq(lottoFreqList);
+        makeJsonFileForLottoFreq(drwNo, lottoFreqList);
+    }
+
+    public static void updateLottoFreqCrawling(String baseUrl) throws Exception {
+        int[] lottoFreqList = new int[46];
+        JSONParser parser = new JSONParser();
+
+        FileReader fr = new FileReader(LOTTO_FREQ_LIST_PATH);
+        Object obj = parser.parse(fr);
+        JSONArray lottoFreqJsonList = (JSONArray) obj;
+        fr.close();
+
+        JSONObject drwNoByObj = (JSONObject) lottoFreqJsonList.get(0);
+        int drwNo = Integer.parseInt(drwNoByObj.get("drwNoBy").toString()) + 1;
+
+        for(int i=1; i<=45; i++) {
+            JSONObject tmpObj = (JSONObject) lottoFreqJsonList.get(i);
+            lottoFreqList[i] = Integer.parseInt(tmpObj.get("number").toString());
+        }
+
+        for( ; ; drwNo++) {
+            String url = baseUrl + drwNo;
+            JSONObject lottoData = urlRead(url);
+
+            if(lottoData.get("returnValue").equals("fail")) {
+                drwNo--;
+                break;
+            } else {
+                lottoFreqList[Integer.parseInt(lottoData.get("drwtNo1").toString())]++;
+                lottoFreqList[Integer.parseInt(lottoData.get("drwtNo2").toString())]++;
+                lottoFreqList[Integer.parseInt(lottoData.get("drwtNo3").toString())]++;
+                lottoFreqList[Integer.parseInt(lottoData.get("drwtNo4").toString())]++;
+                lottoFreqList[Integer.parseInt(lottoData.get("drwtNo5").toString())]++;
+                lottoFreqList[Integer.parseInt(lottoData.get("drwtNo6").toString())]++;
+            }
+        }
+        
+        makeJsonFileForLottoFreq(drwNo, lottoFreqList);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -157,16 +201,29 @@ public class MakeLottoJson {
             System.out.println();
             System.out.println("Please enter the [FLAG]");
             System.out.println();
-            System.out.println("    -all: Make a new file to crawl all information from server (overwrite if file already exists)");
-            System.out.println("    -update: Only newly updated content is crawled from the server to files that already exist");
-            System.out.println("    -freq-all: Make a new file to crawl all information from server and check the frequency by number");
+            System.out.println("    -data:        Make a new file to crawl all information from server (overwrite if file already exists)");
+            System.out.println("    -data-update: Only newly updated content is crawled from the server to files that already exist");
+            System.out.println("    -freq:        Make a new file to crawl all information from server and check the frequency by number");
+            System.out.println("    -freq-update: Only newly updated content is crawled from the server to files that already exist");
+            System.out.println();
+            System.out.println("    -all:         Execute the \"-data\" [FLAG] and \"-freq\" [FLAG] sequentially");
+            System.out.println("    -update:      Execute the \"-data-update\" [FLAG] and \"-freq-update\" [FLAG] sequentially");
             System.out.println();
             return;
         }
 
-        if(args[0].equals("-all")) allLottoDataCrawling(BASE_URL);
-        else if(args[0].equals("-update")) updateLottoDataCrawling(BASE_URL);
-        else if(args[0].equals("-freq-all")) allLottoFreqCrawling(BASE_URL);
+        if(args[0].equals("-data")) allLottoDataCrawling(BASE_URL);
+        else if(args[0].equals("-data-update")) updateLottoDataCrawling(BASE_URL);
+        else if(args[0].equals("-freq")) allLottoFreqCrawling(BASE_URL);
+        else if(args[0].equals("-freq-update")) updateLottoFreqCrawling(BASE_URL);
+        else if(args[0].equals("-all")) {
+            allLottoDataCrawling(BASE_URL);
+            allLottoFreqCrawling(BASE_URL);
+        }
+        else if(args[0].equals("-update")) {
+            updateLottoDataCrawling(BASE_URL);
+            updateLottoFreqCrawling(BASE_URL);
+        }
         else System.out.println("This [FLAG] does not exist");
     }
 }
