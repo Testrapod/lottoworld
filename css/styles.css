@@ -4,6 +4,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
 body { font-family: 'Do Hyeon', sans-serif; }
 
+/* 태그 속성 변경 */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 /* bootstrap 코드 */
 .btn:focus { box-shadow: none; }
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
@@ -20,6 +27,14 @@ body { font-family: 'Do Hyeon', sans-serif; }
 .nav-link:focus, .nav-link:hover {
     color: #C06C84;
 }
+.input-group {
+    width: 70%;
+}
+.table {
+    width: 70%;
+    margin: auto;
+    text-align: center;
+}
 
 /* pc 화면 */
 h1 {
@@ -30,6 +45,7 @@ h1 {
 }
 #navi { margin-bottom: 50px; }
 #number_ball { margin-bottom: 20px; }
+#number_frequency { margin-bottom: 20px; }
 #make_lotto_number {
     margin-top: 20px;
     margin-bottom: 30px;
@@ -49,6 +65,14 @@ h1 {
 #number_frequency_title {
     font-size: x-large;
     margin: 10px;
+}
+#number_analysis_title {
+    font-size: x-large;
+    margin: 10px;
+}
+#number_analysis_btn {
+    margin-top: 20px;
+    margin-bottom: 30px;
 }
 
 .circle {
@@ -81,6 +105,16 @@ h1 {
     background-color: #FBC400;
     margin: 5px;
 }
+.circle-x-mini {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: medium;
+    border-radius: 50%;
+    background-color: #FBC400;
+    margin: 1px;
+}
 
 .ball-text { background-color: white; }
 .view-balls { display: none; }
@@ -97,6 +131,8 @@ footer { margin: 50px; }
 @media (max-width: 992px) {
     h1 { font-size: 38px; }
     #navi { margin-bottom: 40px; }
+    .input-group { width: 80%; }
+    .table { width: 80%; }
 }
 @media (max-width: 767px) {
     #search_lotto_btn { margin-top: 10px; }
@@ -104,4 +140,6 @@ footer { margin: 50px; }
 @media (max-width: 419px) {
     h1 { font-size: xx-large; }
     #navi { margin-bottom: 30px; }
+    .input-group { width: 100%; }
+    .table { width: 100%; }
 }
