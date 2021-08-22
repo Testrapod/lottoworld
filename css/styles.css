@@ -4,7 +4,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
 body { font-family: 'Do Hyeon', sans-serif; }
 
-/* 태그 속성 변경 */
+
+/* 시스템 태그 속성 변경 */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -35,6 +36,7 @@ input[type="number"]::-webkit-inner-spin-button {
     margin: auto;
     text-align: center;
 }
+
 
 /* pc 화면 */
 h1 {
