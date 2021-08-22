@@ -76,6 +76,10 @@ h1 {
     margin-top: 20px;
     margin-bottom: 30px;
 }
+#kakao_map_title {
+    font-size: x-large;
+    margin: 10px;
+}
 
 .circle {
     width: 100px;
