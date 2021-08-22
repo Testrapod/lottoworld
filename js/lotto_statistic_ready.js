@@ -146,25 +146,17 @@ $(document).ready(function () {
         $.each(lottoDataList, function (i, item) {
             var {count, cmpList, sameNumList} = numListCompareWithJson(numList, item);
             if(count >= 3) {
-                // var tagContent =
-                //     "<tr>" +
-                //         "<td scope=\"row\">" + item.drwNo + "회</td>" +
-                //         "<td>" +
-                //             "<div class=\"row justify-content-center\">" +
-                //                 "<div class=\"circle-x-mini ball\">" + cmpList[0] + "</div>" +
-                //                 "<div class=\"circle-x-mini ball\">" + cmpList[1] + "</div>" +
-                //                 "<div class=\"circle-x-mini ball\">" + cmpList[2] + "</div>" +
-                //                 "<div class=\"circle-x-mini ball\">" + cmpList[3] + "</div>" +
-                //                 "<div class=\"circle-x-mini ball\">" + cmpList[4] + "</div>" +
-                //                 "<div class=\"circle-x-mini ball\">" + cmpList[5] + "</div>" +
-                //             "</div>" +
-                //         "</td>" +
-                //         "<td>" + count + "</td>" +
-                //     "</tr>";
+                var numListInTagContent = "";
+                for(var i=0; i<6; i++) {
+                    if(sameNumList.indexOf(cmpList[i]) < 0) numListInTagContent += cmpList[i];
+                    else numListInTagContent += spanRed(cmpList[i]);
+                    if(i != 5) numListInTagContent += ", ";
+                }
+
                 var tagContent =
                     "<tr>" +
                         "<td scope=\"row\">" + item.drwNo + "회</td>" +
-                        "<td>" + cmpList[0] + ", " + cmpList[1] + ", " + cmpList[2] + ", " + cmpList[3] + ", " + cmpList[4] + ", " + cmpList[5] + "</td>" +
+                        "<td>" + numListInTagContent + "</td>" +
                         "<td>" + count + "</td>" +
                     "</tr>";
 
