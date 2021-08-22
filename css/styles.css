@@ -119,6 +119,8 @@ h1 {
     width: 1000px;
 }
 
+#show_map { display: none; }
+
 .divide { margin: 20px; }
 footer { margin: 50px; }
 
