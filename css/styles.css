@@ -105,16 +105,6 @@ h1 {
     background-color: #FBC400;
     margin: 5px;
 }
-.circle-x-mini {
-    width: 30px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    font-size: medium;
-    border-radius: 50%;
-    background-color: #FBC400;
-    margin: 1px;
-}
 
 .ball-text { background-color: white; }
 .view-balls { display: none; }

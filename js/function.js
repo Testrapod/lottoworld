@@ -31,3 +31,13 @@ function saveImg(uri, filename) {
         window.open(uri);
     }
 }
+
+function inputNumberCheck(cmd, tag) {
+    if(tag.value.length >= 2) return false;
+    if(cmd > 47 && cmd < 58) return true;
+    else return false;
+}
+
+function spanRed(text) {
+    return "<span style=\"color:red\">" + text + "</span>"
+}
