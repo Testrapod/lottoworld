@@ -2,7 +2,8 @@
 $(document).ready(function () {
     $.getJSON("https://10eastsea.github.io/lottoworld/src/lotto_data_list.json", function (data) {
         var lastestLottoData = data[data.length-1];
-        $("#latest_winning_money").text(parseInt(lastestLottoData.firstAccumamnt).toLocaleString() + "원");
+        $("#latest_winning_money span").text(parseInt(lastestLottoData.firstAccumamnt).toLocaleString() + "원");
+        $("#latest_winning_money small").text("(실 수령액: " + parseInt(lastestLottoData.firstWinamnt).toLocaleString() + "원)");
         $("#latest_winning_date").text(lastestLottoData.drwNoDate + " 수령 금액 기준");
 
         var lottoNumList = [lastestLottoData.drwtNo1, lastestLottoData.drwtNo2, lastestLottoData.drwtNo3, lastestLottoData.drwtNo4, lastestLottoData.drwtNo5, lastestLottoData.drwtNo6];
