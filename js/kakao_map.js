@@ -84,11 +84,11 @@ $(document).ready(function () {
     });
 
     $("#reset_map_btn").button().on("click", function (event) {
-        getInfo(map);
+        getInfo(map, infowindow);
     });
 });
 
-function getInfo(map) {
+function getInfo(map, infowindow) {
     // 지도의 현재 중심좌표를 얻어옵니다 
     var center = map.getCenter(); 
     
