@@ -83,6 +83,10 @@ h1 {
     font-size: x-large;
     margin: 10px;
 }
+#weight_random_title {
+    font-size: x-large;
+    margin: 10px;
+}
 
 .circle {
     width: 100px;

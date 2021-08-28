@@ -38,4 +38,8 @@ $(document).ready(function () {
             saveImg(canvas.toDataURL('image/png'), "lotto.png");
         });
     });
+
+    $("#weight_random_btn").button().on("click", function (event) {
+        testIsRealRandom();
+    });
 });
