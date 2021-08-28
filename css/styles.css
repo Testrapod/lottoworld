@@ -120,6 +120,7 @@ h1 {
 }
 
 #show_map { display: none; }
+#reset_map_btn { display: none; }
 
 .divide { margin: 20px; }
 footer { margin: 50px; }
