@@ -64,15 +64,21 @@ function highFreqLotto(lottoFreqList, totalSum) {
 }
 
 function lowFreqLotto(lottoFreqList, totalSum) {
-    console.log("준비중.. (빈도수 높은 번호 우선으로 대체합니다)")
+    var revLottoFreqList = [];
+    var revTotalSum = 0;
+    for(var i = 0; i < 45; i++) {
+        var num = Math.round(totalSum / parseInt(lottoFreqList[i]));
+        revLottoFreqList.push(num);
+        revTotalSum += num;
+    }
 
     var lottoNumList = [];
 
     for(var i = 0; i < 6; i++) {
         var tmp = 0, num = 0;
-        var criteria = Math.floor(Math.random() * totalSum) + 1;
+        var criteria = Math.floor(Math.random() * revTotalSum) + 1;
         for(var j = 0; j < 45; j++) {
-            tmp += parseInt(lottoFreqList[j]);
+            tmp += revLottoFreqList[j];
             if(tmp >= criteria) {
                 num = j + 1;
                 break;
@@ -117,6 +123,24 @@ function testIsRealHighFreqRandom(lottoFreqList, totalSum) {
     
     for(var i = 0; i < 1000000; i++) {
         var tmpLottoList = highFreqLotto(lottoFreqList, totalSum);
+        for(var j = 0; j < 6; j++) {
+            freqList[tmpLottoList[j]]++;
+        }
+    }
+
+    console.log(freqList);
+}
+
+function testIsRealLowFreqRandom(lottoFreqList, totalSum) {
+    var freqList = [0,
+                    0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0];
+    
+    for(var i = 0; i < 1000000; i++) {
+        var tmpLottoList = lowFreqLotto(lottoFreqList, totalSum);
         for(var j = 0; j < 6; j++) {
             freqList[tmpLottoList[j]]++;
         }
