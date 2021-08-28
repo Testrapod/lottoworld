@@ -60,6 +60,8 @@ $(document).ready(function () {
         }
 
         $(".view-freq-balls").css("display", "flex");
+        $("#weighted_random_high_freq_btn").css("margin-top", "20px");
+        $("#weighted_random_low_freq_btn").css("margin-top", "20px");
     });
 
     $("#weighted_random_low_freq_btn").button().on("click", function (event) {
@@ -73,5 +75,7 @@ $(document).ready(function () {
         }
 
         $(".view-freq-balls").css("display", "flex");
+        $("#weighted_random_high_freq_btn").css("margin-top", "20px");
+        $("#weighted_random_low_freq_btn").css("margin-top", "20px");
     });
 });
