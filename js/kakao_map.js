@@ -1,5 +1,6 @@
 $(document).ready(function () {
     var isShowMap = false;
+    var map;
 
     // 현재 위치 로드
     var lat, lon;
@@ -11,8 +12,12 @@ $(document).ready(function () {
     $("#show_map_btn").button().on("click", function (event) {
         if (!isShowMap) {
             isShowMap = true;
-            $("#show_map_btn").css("margin", "20px");
+            $("#show_map_btn").css("margin-top", "20px");
+            $("#show_map_btn").css("margin-bottom", "20px");
             $("#show_map_btn").text("지도 가리기");
+            $("#reset_map_btn").css("margin-top", "20px");
+            $("#reset_map_btn").css("margin-bottom", "20px");
+            $("#reset_map_btn").css("display", "inline-block");
             $("#show_map").css("display", "block");
 
             // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
@@ -25,7 +30,7 @@ $(document).ready(function () {
                 };
 
             // 지도를 생성합니다    
-            var map = new kakao.maps.Map(mapContainer, mapOption);
+            map = new kakao.maps.Map(mapContainer, mapOption);
 
             // 장소 검색 객체를 생성합니다
             var ps = new kakao.maps.services.Places(map);
@@ -71,8 +76,50 @@ $(document).ready(function () {
         } else {
             isShowMap = false;
             $("#show_map_btn").css("margin", "0px");
+            $("#show_map_btn").css("margin-bottom", "0px");
             $("#show_map_btn").text("지도 보기");
+            $("#reset_map_btn").css("margin-top", "0px");
+            $("#reset_map_btn").css("margin-bottom", "0px");
+            $("#reset_map_btn").css("display", "none");
             $("#show_map").css("display", "none");
         }
     });
+
+    $("#reset_map_btn").button().on("click", function (event) {
+        getInfo(map);
+    });
 });
+
+function getInfo(map) {
+    // 지도의 현재 중심좌표를 얻어옵니다 
+    var center = map.getCenter(); 
+    
+    // 지도의 현재 레벨을 얻어옵니다
+    var level = map.getLevel();
+    
+    // 지도타입을 얻어옵니다
+    var mapTypeId = map.getMapTypeId(); 
+    
+    // 지도의 현재 영역을 얻어옵니다 
+    var bounds = map.getBounds();
+    
+    // 영역의 남서쪽 좌표를 얻어옵니다 
+    var swLatLng = bounds.getSouthWest(); 
+    
+    // 영역의 북동쪽 좌표를 얻어옵니다 
+    var neLatLng = bounds.getNorthEast(); 
+    
+    // 영역정보를 문자열로 얻어옵니다. ((남,서), (북,동)) 형식입니다
+    var boundsStr = bounds.toString();
+    
+    
+    var message = '지도 중심좌표는 위도 ' + center.getLat() + ', <br>';
+    message += '경도 ' + center.getLng() + ' 이고 <br>';
+    message += '지도 레벨은 ' + level + ' 입니다 <br> <br>';
+    message += '지도 타입은 ' + mapTypeId + ' 이고 <br> ';
+    message += '지도의 남서쪽 좌표는 ' + swLatLng.getLat() + ', ' + swLatLng.getLng() + ' 이고 <br>';
+    message += '북동쪽 좌표는 ' + neLatLng.getLat() + ', ' + neLatLng.getLng() + ' 입니다';
+    
+    // 개발자도구를 통해 직접 message 내용을 확인해 보세요.
+    console.log(message);
+}
