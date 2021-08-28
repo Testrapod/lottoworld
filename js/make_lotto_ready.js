@@ -1,6 +1,16 @@
 /* make_lotto.html document ready */
 $(document).ready(function () {
     var captureable = false;
+    var lottoFreqList = []; var totalSum = 0;
+
+    $.getJSON("https://10eastsea.github.io/lottoworld/src/lotto_freq_list.json", function (data) {
+        $.each(data, function (i, item) {
+            if(i == 0) return true;
+
+            lottoFreqList.push(item.number);
+            totalSum += parseInt(item.number);
+        });
+    });
 
     $("#make_lotto_btn").button().on("click", function (event) {
         var count = $("#select_lotto_count option:selected").val();
@@ -39,7 +49,29 @@ $(document).ready(function () {
         });
     });
 
-    $("#weight_random_btn").button().on("click", function (event) {
-        testIsRealRandom();
+    $("#weighted_random_high_freq_btn").button().on("click", function (event) {
+        var lottoNumList = highFreqLotto(lottoFreqList, totalSum);
+        var ballList = $(".freq-ball");
+
+        for (var i = 0; i < 6; i++) {
+            var num = lottoNumList[i];
+            $(ballList[i]).text(num);
+            colorSetting(num, ballList[i]);
+        }
+
+        $(".view-freq-balls").css("display", "flex");
+    });
+
+    $("#weighted_random_low_freq_btn").button().on("click", function (event) {
+        var lottoNumList = lowFreqLotto(lottoFreqList, totalSum);
+        var ballList = $(".freq-ball");
+
+        for (var i = 0; i < 6; i++) {
+            var num = lottoNumList[i];
+            $(ballList[i]).text(num);
+            colorSetting(num, ballList[i]);
+        }
+
+        $(".view-freq-balls").css("display", "flex");
     });
 });

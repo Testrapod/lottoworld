@@ -83,9 +83,13 @@ h1 {
     font-size: x-large;
     margin: 10px;
 }
-#weight_random_title {
+#weighted_random_title {
     font-size: x-large;
     margin: 10px;
+}
+#weighted_random_high_freq_btn, #weighted_random_low_freq_btn {
+    margin-top: 20px;
+    margin-bottom: 30px;
 }
 
 .circle {
@@ -121,6 +125,7 @@ h1 {
 
 .ball-text { background-color: white; }
 .view-balls { display: none; }
+.view-freq-balls { display: none; }
 
 .bar-chart {
     width: 1000px;
