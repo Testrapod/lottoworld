@@ -129,10 +129,10 @@
     </div>
     <br><br>
 
-    <!-- weight random -->
-    <div id="weight_random">
+    <!-- weighted random -->
+    <div id="weighted_random">
         <div class="container">
-            <div id="weight_random_title" class="row justify-content-center">
+            <div id="weighted_random_title" class="row justify-content-center">
                 <div class="text-center">
                     통계 기반 로또 번호 추출
                 </div>
@@ -142,9 +142,18 @@
                     지난 회차들의 로또 번호 빈도수를 분석해서, 다음 회차의 로또 번호를 추출합니다.
                 </p>
             </div>
+            <div class="row justify-content-center view-freq-balls">
+                <div class="circle-medium freq-ball">1</div>
+                <div class="circle-medium freq-ball">2</div>
+                <div class="circle-medium freq-ball">3</div>
+                <div class="circle-medium freq-ball">4</div>
+                <div class="circle-medium freq-ball">5</div>
+                <div class="circle-medium freq-ball">6</div>
+            </div>
             <div class="row justify-content-center">
                 <div class="text-center">
-                    <button type="button" id="weight_random_btn" class="btn btn-danger">로또 번호 추출</button>
+                    <button type="button" id="weighted_random_high_freq_btn" class="btn btn-danger">빈도수 높은 번호 우선</button>
+                    <button type="button" id="weighted_random_low_freq_btn" class="btn btn-danger">빈도수 낮은 번호 우선</button>
                 </div>
             </div>
         </div>

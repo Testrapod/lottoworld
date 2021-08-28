@@ -42,6 +42,53 @@ function spanRed(text) {
     return "<span style=\"color:red\">" + text + "</span>"
 }
 
+function highFreqLotto(lottoFreqList, totalSum) {
+    var lottoNumList = [];
+
+    for(var i = 0; i < 6; i++) {
+        var tmp = 0, num = 0;
+        var criteria = Math.floor(Math.random() * totalSum) + 1;
+        for(var j = 0; j < 45; j++) {
+            tmp += parseInt(lottoFreqList[j]);
+            if(tmp >= criteria) {
+                num = j + 1;
+                break;
+            }
+        }
+
+        if (!(lottoNumList.find((x) => (x === num)))) lottoNumList.push(num);
+        else i--;
+    }
+
+    return lottoNumList.sort(function (a, b) { return a - b; });
+}
+
+function lowFreqLotto(lottoFreqList, totalSum) {
+    console.log("준비중.. (빈도수 높은 번호 우선으로 대체합니다)")
+
+    var lottoNumList = [];
+
+    for(var i = 0; i < 6; i++) {
+        var tmp = 0, num = 0;
+        var criteria = Math.floor(Math.random() * totalSum) + 1;
+        for(var j = 0; j < 45; j++) {
+            tmp += parseInt(lottoFreqList[j]);
+            if(tmp >= criteria) {
+                num = j + 1;
+                break;
+            }
+        }
+
+        if (!(lottoNumList.find((x) => (x === num)))) lottoNumList.push(num);
+        else i--;
+    }
+
+    return lottoNumList.sort(function (a, b) { return a - b; });
+}
+
+
+
+/* test function */
 function testIsRealRandom() {
     var freqList = [0,
                     0,0,0,0,0,0,0,0,0,0,
@@ -52,6 +99,24 @@ function testIsRealRandom() {
     
     for(var i = 0; i < 1000000; i++) {
         var tmpLottoList = lotto();
+        for(var j = 0; j < 6; j++) {
+            freqList[tmpLottoList[j]]++;
+        }
+    }
+
+    console.log(freqList);
+}
+
+function testIsRealHighFreqRandom(lottoFreqList, totalSum) {
+    var freqList = [0,
+                    0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0,0,0,0,0,0,
+                    0,0,0,0,0];
+    
+    for(var i = 0; i < 1000000; i++) {
+        var tmpLottoList = highFreqLotto(lottoFreqList, totalSum);
         for(var j = 0; j < 6; j++) {
             freqList[tmpLottoList[j]]++;
         }
