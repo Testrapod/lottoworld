@@ -41,8 +41,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">더보기</a>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="https://www.dhlottery.co.kr/gameInfo.do?method=buyLotto">로또 6/45 구매</a></li>
-                      <li><a class="dropdown-item" href="https://www.dhlottery.co.kr/common.do?method=main">동행복권 홈페이지</a></li>
+                      <li><a id="lotto_buy_link" class="dropdown-item" href="https://www.dhlottery.co.kr/gameInfo.do?method=buyLotto">로또 6/45 구매</a></li>
+                      <li><a id="lotto_home_link" class="dropdown-item" href="https://www.dhlottery.co.kr/common.do?method=main">동행복권 홈페이지</a></li>
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" href="comment.html">댓글달기</a></li>
                     </ul>
@@ -85,7 +85,7 @@
                     <div class="card-body">
                         <h5 class="card-title">로또(Lotto)란?</h5>
                         <p class="card-text">로또 6/45는 (주)동행복권과 판매점 계약을 체결한 로또 단말기가 설치된 판매점 (전국의 편의점, 복권방 및 가판대 등)과 ㈜동행복권 인터넷 홈페이지에서 구매하실 수 있습니다.</p>
-                        <a class="btn btn-outline-secondary" href="https://www.dhlottery.co.kr/gameInfo.do?method=gameMethod"><p class="card-text"><small>로또 6/45의 특징 보러가기</small></p></a>
+                        <a id="lotto_info_link" class="btn btn-outline-secondary" href="https://www.dhlottery.co.kr/gameInfo.do?method=gameMethod"><p class="card-text"><small>로또 6/45의 특징 보러가기</small></p></a>
                     </div>
                 </div>
                 <div class="card">
@@ -140,6 +140,7 @@
     <script type="text/javascript" src="js/kakao_map.js"></script>
     <!-- scripts js -->
     <script type="text/javascript" src="js/function.js"></script>
+    <script type="text/javascript" src="js/link_router.js"></script>
     <script type="text/javascript" src="js/index_ready.js"></script>
 </body>
 </html>
