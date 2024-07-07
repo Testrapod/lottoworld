@@ -1,6 +1,6 @@
 # Lotto World
 
-<h3 align="center"><a href="https://10eastsea.github.io/lottoworld">Lotto World</a></h3>
+<h3 align="center"><a href="https://brienzb.github.io/lottoworld/">Lotto World</a></h3>
 
 
 ## 1. 홈

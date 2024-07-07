@@ -51,7 +51,7 @@ $(document).ready(function () {
     var lottoFreqList = [];
     var lottoFreqMax = 180, lottoFreqMin = 60;
 
-    $.getJSON("https://10eastsea.github.io/lottoworld/src/lotto_data_list.json", function (data) {
+    $.getJSON("https://brienzb.github.io/lottoworld/src/lotto_data_list.json", function (data) {
         lottoDataList = data;
         lottoDataList = lottoDataList.sort(function (a, b) { return b.drwNo - a.drwNo; });
 
@@ -69,7 +69,7 @@ $(document).ready(function () {
         $("#select_lotto_date").text(lottoData.drwNoDate);
     });
 
-    $.getJSON("https://10eastsea.github.io/lottoworld/src/lotto_freq_list.json", function (data) {
+    $.getJSON("https://brienzb.github.io/lottoworld/src/lotto_freq_list.json", function (data) {
         $.each(data, function (i, item) {
             if(i == 0) return true;
             lottoFreqList.push(item.number);
