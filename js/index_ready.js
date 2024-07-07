@@ -1,6 +1,6 @@
 /* index.html document ready */
 $(document).ready(function () {
-    $.getJSON("https://10eastsea.github.io/lottoworld/src/lotto_data_list.json", function (data) {
+    $.getJSON("https://brienzb.github.io/lottoworld/src/lotto_data_list.json", function (data) {
         var lastestLottoData = data[data.length-1];
         $("#latest_winning_money span").text(parseInt(lastestLottoData.firstAccumamnt).toLocaleString() + "원");
         $("#latest_winning_money small").text("(1인당 당첨액: " + parseInt(lastestLottoData.firstWinamnt).toLocaleString() + "원)");
