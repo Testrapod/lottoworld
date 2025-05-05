@@ -3,7 +3,7 @@ $(document).ready(function () {
     var captureable = false;
     var lottoFreqList = []; var totalSum = 0;
 
-    $.getJSON("https://brienzb.github.io/lottoworld/src/lotto_freq_list.json", function (data) {
+    $.getJSON("https://testrapod.github.io/lottoworld/src/lotto_freq_list.json", function (data) {
         $.each(data, function (i, item) {
             if(i == 0) return true;
 
