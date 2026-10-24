@@ -1,29 +1,31 @@
-/* index.html document ready */
-$(document).ready(function () {
-    $.getJSON("https://testrapod.github.io/lottoworld/src/lotto_data_list.json", function (data) {
-        var lastestLottoData = data[data.length-1];
-        $("#latest_winning_money span").text(parseInt(lastestLottoData.firstAccumamnt).toLocaleString() + "원");
-        $("#latest_winning_money small").text("(1인당 당첨액: " + parseInt(lastestLottoData.firstWinamnt).toLocaleString() + "원)");
-        $("#latest_winning_date").text(lastestLottoData.drwNoDate + " 수령 금액 기준");
-
-        var lottoNumList = [lastestLottoData.drwtNo1, lastestLottoData.drwtNo2, lastestLottoData.drwtNo3, lastestLottoData.drwtNo4, lastestLottoData.drwtNo5, lastestLottoData.drwtNo6];
-        var ballList = $(".ball");
-
-        for (var i = 0; i < 6; i++) {
-            var num = lottoNumList[i];
-            $(ballList[i]).text(num);
-            colorSetting(num, ballList[i]);
-        }
-    });
-
-    $("#make_lotto_btn").button().on("click", function (event) {
-        var lottoNumList = lotto();
-        var ballList = $(".ball");
-
-        for (var i = 0; i < 6; i++) {
-            var num = lottoNumList[i];
-            $(ballList[i]).text(num);
-            colorSetting(num, ballList[i]);
-        }
-    });
+import { renderBalls, message } from './site.js';
+import { generateNumbers, numbersOf } from './lotto.js';
+import { loadData, showDataStatus, showDataError } from './data.js';
+import './kakao_map.js';
+const balls = document.getElementById('winning-balls');
+const restore = document.getElementById('restore-winning-btn');
+let latest;
+let showingGenerated = false;
+function showWinning() {
+  showingGenerated = false;
+  renderBalls(balls, numbersOf(latest), latest.bnusNo);
+  message('number-state', `제${latest.drwNo}회 당첨번호 · ${latest.drwNoDate} 추첨`);
+  restore.hidden = true;
+}
+document.getElementById('make_lotto_btn').addEventListener('click', () => {
+  showingGenerated = true;
+  renderBalls(balls, generateNumbers()); message('number-state', '새로 생성한 번호'); restore.hidden = !latest;
 });
+restore.addEventListener('click', showWinning);
+try {
+  const { draws, metadata } = await loadData(); latest = draws.at(-1);
+  showDataStatus(metadata);
+  if (showingGenerated) restore.hidden = false;
+  else showWinning();
+  message('latest_winning_money', `${latest.firstWinamnt.toLocaleString('ko-KR')}원`);
+  message('latest_winning_details', `1등 ${latest.firstPrzwnerCo}명 · 총 당첨금 ${latest.firstAccumamnt.toLocaleString('ko-KR')}원`);
+  message('latest_winning_date', `${latest.drwNoDate} 추첨 · 제${latest.drwNo}회`);
+} catch (error) {
+  showDataError(error);
+  if (!showingGenerated) message('number-state', '당첨번호를 불러올 수 없습니다');
+}

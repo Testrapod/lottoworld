@@ -1,137 +1,81 @@
-$(document).ready(function () {
-    var isShowMap = false;
-    var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 }); // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
-    var map;
-
-    // 현재 위치 로드
-    var lat, lon;
-    navigator.geolocation.getCurrentPosition(function (pos) {
-        lat = pos.coords.latitude;
-        lon = pos.coords.longitude;
-    });
-
-    $("#show_map_btn").button().on("click", function (event) {
-        if (!isShowMap) {
-            isShowMap = true;
-            $("#show_map_btn").css("margin-top", "20px");
-            $("#show_map_btn").css("margin-bottom", "20px");
-            $("#show_map_btn").text("지도 가리기");
-            $("#reset_map_btn").css("margin-top", "20px");
-            $("#reset_map_btn").css("margin-bottom", "20px");
-            $("#reset_map_btn").css("display", "inline-block");
-            $("#show_map").css("display", "block");
-
-            $('#map').empty();
-            var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-                mapOption = {
-                    center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-                    level: 3 // 지도의 확대 레벨
-                };
-
-            // 지도를 생성합니다    
-            map = new kakao.maps.Map(mapContainer, mapOption);
-
-            // 장소 검색 객체를 생성합니다
-            var ps = new kakao.maps.services.Places(map);
-
-            // 키워드로 장소를 검색합니다
-            ps.keywordSearch('로또', placesSearchCB, { x: lon, y: lat, radius: 10000 });
-
-            // 키워드 검색 완료 시 호출되는 콜백함수 입니다
-            function placesSearchCB(data, status, pagination) {
-                if (status === kakao.maps.services.Status.OK) {
-
-                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-                    // LatLngBounds 객체에 좌표를 추가합니다
-                    var bounds = new kakao.maps.LatLngBounds();
-                    bounds.extend(new kakao.maps.LatLng(lat, lon));
-
-                    for (var i = 0; i < data.length; i++) {
-                        displayMarker(data[i]);
-                        bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-                    }
-
-                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-                    map.setBounds(bounds);
-                }
-            }
-
-            // 지도에 마커를 표시하는 함수입니다
-            function displayMarker(place) {
-
-                // 마커를 생성하고 지도에 표시합니다
-                var marker = new kakao.maps.Marker({
-                    map: map,
-                    position: new kakao.maps.LatLng(place.y, place.x)
-                });
-
-                // 마커에 클릭이벤트를 등록합니다
-                kakao.maps.event.addListener(marker, 'click', function () {
-                    // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-                    infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
-                    infowindow.open(map, marker);
-                });
-            }
-        } else {
-            isShowMap = false;
-            $("#show_map_btn").css("margin", "0px");
-            $("#show_map_btn").css("margin-bottom", "0px");
-            $("#show_map_btn").text("지도 보기");
-            $("#reset_map_btn").css("margin-top", "0px");
-            $("#reset_map_btn").css("margin-bottom", "0px");
-            $("#reset_map_btn").css("display", "none");
-            $("#show_map").css("display", "none");
-        }
-    });
-
-    $("#reset_map_btn").button().on("click", function (event) {
-        getInfo(map, infowindow);
-    });
-});
-
-function getInfo(map, infowindow) {
-    // 지도의 현재 중심좌표를 얻어옵니다 
-    var center = map.getCenter(); 
-
-    // 장소 검색 객체를 생성합니다
-    var ps = new kakao.maps.services.Places(map);
-
-    // 키워드로 장소를 검색합니다
-    ps.keywordSearch('로또', placesSearchCB, { x: center.getLng(), y: center.getLat(), radius: 10000 });
-
-    // 키워드 검색 완료 시 호출되는 콜백함수 입니다
-    function placesSearchCB(data, status, pagination) {
-        if (status === kakao.maps.services.Status.OK) {
-
-            // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-            // LatLngBounds 객체에 좌표를 추가합니다
-            var bounds = new kakao.maps.LatLngBounds();
-            bounds.extend(new kakao.maps.LatLng(center.getLat(), center.getLng()));
-
-            for (var i = 0; i < data.length; i++) {
-                displayMarker(data[i]);
-                bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-            }
-
-            // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-            map.setBounds(bounds);
-        }
+import { config } from './config.js';
+import { message } from './site.js';
+const toggle = document.getElementById('show_map_btn');
+const reset = document.getElementById('reset_map_btn');
+const panel = document.getElementById('show_map');
+let sdk, map, infoWindow;
+let markers = [];
+function loadSdk() {
+  if (window.kakao?.maps?.services) return Promise.resolve(window.kakao);
+  sdk ??= new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    const timer = setTimeout(() => { script.remove(); reject(new Error('지도를 불러오는 시간이 초과되었습니다. 아래 판매점 검색 링크를 이용해주세요.')); }, 15000);
+    const fail = () => { clearTimeout(timer); script.remove(); reject(new Error('지도를 불러오지 못했습니다. 아래 판매점 검색 링크를 이용해주세요.')); };
+    script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${encodeURIComponent(config.kakaoMapJavaScriptKey)}&libraries=services&autoload=false`;
+    script.onerror = fail;
+    script.onload = () => {
+      if (!window.kakao?.maps?.load) return fail();
+      window.kakao.maps.load(() => {
+        clearTimeout(timer);
+        if (!window.kakao.maps.services) return fail();
+        resolve(window.kakao);
+      });
+    };
+    document.head.append(script);
+  }).catch(error => { sdk = undefined; throw error; });
+  return sdk;
+}
+function locate() {
+  return new Promise(resolve => {
+    const fallback = reason => resolve({ lat: 37.566826, lng: 126.9786567, note: `${reason} 서울시청 기준으로 표시합니다. 지도를 이동한 뒤 재검색할 수 있습니다.` });
+    if (!navigator.geolocation) return fallback('현재 위치를 사용할 수 없습니다.');
+    navigator.geolocation.getCurrentPosition(position => {
+      const { latitude: lat, longitude: lng } = position.coords;
+      if (!Number.isFinite(lat) || !Number.isFinite(lng) || Math.abs(lat) > 90 || Math.abs(lng) > 180) return fallback('위치 정보를 확인하지 못했습니다.');
+      resolve({ lat, lng, note: '현재 위치를 기준으로 표시합니다.' });
+    }, () => fallback('위치 권한이 없거나 위치를 확인하지 못했습니다.'), { timeout: 7000, maximumAge: 60000 });
+  });
+}
+function search(note = '지도 중심을 기준으로 표시합니다.') {
+  reset.disabled = true;
+  const kakao = window.kakao;
+  const center = map.getCenter();
+  for (const marker of markers) marker.setMap(null);
+  markers = []; infoWindow.close();
+  message('map-status', '주변 판매점을 검색하고 있습니다.');
+  const timeout = setTimeout(() => { reset.disabled = false; message('map-status', '검색 응답이 지연되고 있습니다. 재검색하거나 아래 링크를 이용해주세요.', true); }, 15000);
+  const places = new kakao.maps.services.Places();
+  places.keywordSearch('로또', (data, status) => {
+    clearTimeout(timeout); reset.disabled = false;
+    if (status === kakao.maps.services.Status.ZERO_RESULT) return message('map-status', `${note} 반경 ${config.mapRadius / 1000}km 안에 검색된 판매점이 없습니다.`);
+    if (status !== kakao.maps.services.Status.OK) return message('map-status', '판매점을 검색하지 못했습니다. 아래 공식 판매점 찾기를 이용해주세요.', true);
+    for (const place of data) {
+      const lat = Number(place.y), lng = Number(place.x);
+      if (!Number.isFinite(lat) || !Number.isFinite(lng)) continue;
+      const marker = new kakao.maps.Marker({ map, position: new kakao.maps.LatLng(lat, lng) }); markers.push(marker);
+      kakao.maps.event.addListener(marker, 'click', () => {
+        const content = document.createElement('div'); content.className = 'map-place'; content.textContent = place.place_name;
+        infoWindow.setContent(content); infoWindow.open(map, marker);
+      });
     }
-
-    // 지도에 마커를 표시하는 함수입니다
-    function displayMarker(place) {
-
-        // 마커를 생성하고 지도에 표시합니다
-        var marker = new kakao.maps.Marker({
-            map: map,
-            position: new kakao.maps.LatLng(place.y, place.x)
-        });
-
-        // 마커에 클릭이벤트를 등록합니다
-        kakao.maps.event.addListener(marker, 'click', function () {
-            // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-            infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
-            infowindow.open(map, marker);
-        });
+    message('map-status', `${note} 반경 ${config.mapRadius / 1000}km 내 검색 결과 ${markers.length}곳입니다. 판매 여부는 방문 전 확인해주세요.`);
+  }, { x: center.getLng(), y: center.getLat(), radius: config.mapRadius });
+}
+if (toggle) {
+  toggle.addEventListener('click', async () => {
+    if (!config.kakaoMapJavaScriptKey) {
+      message('map-status', '지도를 사용할 수 없습니다. 아래 공식 판매점 찾기 또는 카카오맵 검색을 이용해주세요.'); return;
     }
+    if (map && !panel.hidden) { panel.hidden = true; reset.hidden = true; toggle.textContent = '지도 보기'; return; }
+    if (map) { panel.hidden = false; reset.hidden = false; map.relayout(); toggle.textContent = '지도 가리기'; return; }
+    toggle.disabled = true; message('map-status', '지도와 현재 위치를 준비하고 있습니다.');
+    try {
+      const kakao = await loadSdk(); const position = await locate(); panel.hidden = false;
+      map = new kakao.maps.Map(document.getElementById('map'), { center: new kakao.maps.LatLng(position.lat, position.lng), level: 4 });
+      infoWindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+      toggle.textContent = '지도 가리기'; reset.hidden = false; search(position.note);
+    } catch (error) { panel.hidden = true; message('map-status', error.message, true); }
+    finally { toggle.disabled = false; }
+  });
+  reset.addEventListener('click', () => { if (map) search(); });
 }
